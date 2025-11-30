@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <div class="box">
+            <div class="yellowcontainer"></div>
+
+            <header>
+                <h1>To-Do List</h1>
+            </header>
+
+            <div class="sortinput">
+                <div class="sort">
+                    <img class="sorts down" src="/down.svg" alt="">
+                    <img class="sorts downfilled" src="/downfilled.svg" alt="">
+                    <img class="sorts up" src="/up.svg" alt="">
+                    <img class="sorts upfilled" src="/upfilled.svg" alt="">
+                </div>
+
+                <div class="wrapper">
+                    <div class="input">
+                        <input id="todo-input" type="text" autocomplete="off" placeholder="Enter task">
+                        <img class="x-icon" src="/x.svg" alt="">
+                    </div>
+                </div>
+                <ol id="task-list"></ol>
+            </div>
+
+            <div class="button">
+                <button id="addsymbol" type="button">+</button>
+                <button id="add" type="button">Add</button>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
