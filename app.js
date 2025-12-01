@@ -9,27 +9,43 @@ const up = document.querySelector(".up");
 const upfilled = document.querySelector(".upfilled");
 
 const listContainer = document.querySelector("#task-list");
+
 listContainer.style.display = "none";
 listContainer.style.border = "none";
 
 function addTask() {
-    if (input.value.trim() === "") return;
+    const text = input.value.trim();
+    if (text === "") return;
 
     listContainer.style.display = "block";
     listContainer.style.border = "1px solid #c8c7c7";
 
     let li = document.createElement("li");
-    li.textContent = input.value.trim();
-    input.value = "";
 
-    let delIcon = document.createElement("img");
-    delIcon.src = "/x.svg";
-    li.appendChild(delIcon);
+    let span = document.createElement("span");
+    span.textContent = text;
 
-    delIcon.addEventListener("mouseenter", () => delIcon.src = "/xfilled.svg");
-    delIcon.addEventListener("mouseleave", () => delIcon.src = "/x.svg");
+    let del = document.createElement("img");
+    del.src = "x.svg";
+
+    del.addEventListener("mouseenter", () => del.src = "xfilled.svg");
+    del.addEventListener("mouseleave", () => del.src = "x.svg");
+    del.addEventListener("click", () => {
+        li.remove();
+        if (listContainer.children.length === 0) {
+            listContainer.style.display = "none";
+            listContainer.style.border = "none";
+            showOnly(down);
+        }
+    });
+
+    li.appendChild(span);
+    li.appendChild(del);
 
     listContainer.appendChild(li);
+
+    input.value = "";
+    input.focus();
     showOnly(down);
 }
 
@@ -37,35 +53,40 @@ addBtn.addEventListener("click", addTask);
 
 addSymbol.addEventListener("click", () => {
     input.focus();
+    input.selectionStart = input.value.length;
 });
 
 xIcon.addEventListener("click", () => input.value = "");
 
-listContainer.addEventListener("click", (e) => {
-    if (e.target.tagName === "IMG") e.target.parentElement.remove();
-
-    if (listContainer.children.length === 0) {
-        listContainer.style.display = "none";
-        listContainer.style.border = "none";
-        showOnly(down);
+input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        addTask();
     }
 });
 
 function showOnly(icon) {
-    [down, downfilled, up, upfilled].forEach(i => i.style.display = 'none');
-    icon.style.display = 'block';
+    [down, downfilled, up, upfilled].forEach(i => i.style.display = "none");
+    icon.style.display = "block";
 }
 
 function sortAscending() {
     let items = Array.from(listContainer.children);
-    items.sort((a, b) => a.textContent.localeCompare(b.textContent));
-    items.forEach(item => listContainer.appendChild(item));
+    items.sort((a, b) => {
+        let ta = a.querySelector("span").textContent.toLowerCase();
+        let tb = b.querySelector("span").textContent.toLowerCase();
+        return ta.localeCompare(tb);
+    });
+    items.forEach(i => listContainer.appendChild(i));
 }
 
 function sortDescending() {
     let items = Array.from(listContainer.children);
-    items.sort((a, b) => b.textContent.localeCompare(a.textContent));
-    items.forEach(item => listContainer.appendChild(item));
+    items.sort((a, b) => {
+        let ta = a.querySelector("span").textContent.toLowerCase();
+        let tb = b.querySelector("span").textContent.toLowerCase();
+        return tb.localeCompare(ta);
+    });
+    items.forEach(i => listContainer.appendChild(i));
 }
 
 down.addEventListener("click", () => {
