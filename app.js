@@ -26,10 +26,10 @@ function addTask() {
     span.textContent = text;
 
     let del = document.createElement("img");
-    del.src = "x.svg";
+    del.src = "./Images/x.svg";
 
-    del.addEventListener("mouseenter", () => del.src = "xfilled.svg");
-    del.addEventListener("mouseleave", () => del.src = "x.svg");
+    del.addEventListener("mouseenter", () => del.src = "./Images/xfilled.svg");
+    del.addEventListener("mouseleave", () => del.src = "./Images/x.svg");
     del.addEventListener("click", () => {
         li.remove();
         if (listContainer.children.length === 0) {
